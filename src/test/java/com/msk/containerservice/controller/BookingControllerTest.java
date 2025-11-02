@@ -1,7 +1,9 @@
 package com.msk.containerservice.controller;
 
 import com.msk.containerservice.dto.AvailabilityResponse;
+import com.msk.containerservice.dto.BookingResponse;
 import com.msk.containerservice.service.AvailabilityService;
+import com.msk.containerservice.service.BookingService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
@@ -20,6 +22,9 @@ class BookingControllerTest {
 
     @MockBean
     private AvailabilityService availabilityService;
+
+    @MockBean
+    private BookingService bookingService;
 
     @Test
     void checkAvailability_validRequest_returnsOk() {
@@ -167,5 +172,34 @@ class BookingControllerTest {
                 .bodyValue(requestBody)
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+
+    @Test
+    void createBooking_validRequest_returnsBookingRef() {
+        // Given: Service returns bookingRef
+        when(bookingService.createBooking(any()))
+                .thenReturn(Mono.just(new BookingResponse("957000001")));
+
+        String requestBody = """
+                {
+                    "containerType": "DRY",
+                    "containerSize": 20,
+                    "origin": "Southampton",
+                    "destination": "Singapore",
+                    "quantity": 5,
+                    "timestamp": "2020-10-12T13:53:09Z"
+                }
+                """;
+
+        // When/Then: POST to endpoint
+        webTestClient
+                .post()
+                .uri("/api/bookings")
+                .header("Content-Type", "application/json")
+                .bodyValue(requestBody)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.bookingRef").isEqualTo("957000001");
     }
 }
