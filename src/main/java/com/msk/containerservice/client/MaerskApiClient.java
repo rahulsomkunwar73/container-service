@@ -34,7 +34,7 @@ public class MaerskApiClient {
     }
 
     public Mono<Integer> getAvailableSpace(AvailabilityRequest request) {
-        log.debug("Calling external API for request: {}", request);
+        log.info("Calling external API for request: {}", request);
 
         return webClient
                 .post()
@@ -45,7 +45,7 @@ public class MaerskApiClient {
                 .bodyToMono(ExternalApiResponse.class)
                 .timeout(timeout)
                 .map(response -> {
-                    log.debug("Received availableSpace={}", response.availableSpace());
+                    log.info("Received availableSpace={}", response.availableSpace());
                     return response.availableSpace();
                 })
                 .doOnError(error ->

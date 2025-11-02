@@ -18,12 +18,12 @@ public class AvailabilityService {
 
 
     public Mono<AvailabilityResponse> checkAvailability(AvailabilityRequest request) {
-        log.debug("Service: Checking availability for request: {}", request);
+        log.info("Service: Checking availability for request: {}", request);
 
         return maerskApiClient.getAvailableSpace(request)
                 .map(availableSpace -> {
                     boolean available = availableSpace > 0;
-                    log.debug("Service: availableSpace={}, available={}", availableSpace, available);
+                    log.info("Service: availableSpace={}, available={}", availableSpace, available);
                     return new AvailabilityResponse(available);
                 })
                 .doOnError(error ->

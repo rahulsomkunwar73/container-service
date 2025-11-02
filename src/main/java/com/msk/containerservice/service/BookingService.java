@@ -15,11 +15,11 @@ public class BookingService {
     private final AtomicLong bookingCounter = new AtomicLong(957000001);
 
     public Mono<BookingResponse> createBooking(BookingRequest request) {
-        log.debug("Service: Creating booking for request: {}", request);
+        log.info("Service: Creating booking for request: {}", request);
 
         String bookingRef = String.valueOf(bookingCounter.getAndIncrement());
 
-        log.debug("Service: Generated bookingRef={}", bookingRef);
+        log.info("Service: Generated bookingRef={}", bookingRef);
 
         return Mono.just(new BookingResponse(bookingRef));
     }
