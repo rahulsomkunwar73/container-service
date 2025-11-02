@@ -14,6 +14,6 @@ public class BookingController {
 
     @PostMapping("/checkAvailability")
     public Mono<Map<String, Boolean>> checkAvailability(@RequestBody String request) {
-        return Mono.just(Map.of("something", false));
+        return Mono.just(Map.of("available", true));
     }
 }
