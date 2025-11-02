@@ -1,9 +1,16 @@
 package com.msk.containerservice.controller;
 
+import com.msk.containerservice.dto.AvailabilityResponse;
+import com.msk.containerservice.service.AvailabilityService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Mono;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @WebFluxTest
 class BookingControllerTest {
@@ -11,8 +18,15 @@ class BookingControllerTest {
     @Autowired
     private WebTestClient webTestClient;
 
+    @MockBean
+    private AvailabilityService availabilityService;
+
     @Test
-    void checkAvailability_shouldReturnOk() {
+    void checkAvailability_validRequest_returnsOk() {
+        // Given: Service returns available=true
+        when(availabilityService.checkAvailability(any()))
+                .thenReturn(Mono.just(new AvailabilityResponse(true)));
+
         String requestBody = """
                 {
                     "containerType": "DRY",
@@ -23,6 +37,8 @@ class BookingControllerTest {
                 }
                 """;
 
+        // When: POST to endpoint
+        // Then: Should return 200 OK with available=true
         webTestClient
                 .post()
                 .uri("/api/bookings/checkAvailability")
@@ -31,7 +47,7 @@ class BookingControllerTest {
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.available").exists();
+                .jsonPath("$.available").isEqualTo(true);
     }
 
     @Test
