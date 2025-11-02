@@ -24,7 +24,7 @@ import java.util.Map;
 @RequestMapping("/api/bookings")
 public class BookingController {
 
-    private  AvailabilityService availabilityService;
+    private final AvailabilityService availabilityService;
 
     private final BookingService bookingService;
 
