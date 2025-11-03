@@ -66,7 +66,16 @@ The application will start on port 8080.
 ./mvnw test
 ```
 
-## Notes
+## Assumptions
 
-- The external Maersk API endpoint is mocked for testing purposes
-- A running MongoDB instance with proper credentials is required for the application to function
+*   **External API:** The external Maersk API is currently not operational. The application has been designed to work with a mock of this API.
+*   **MongoDB:** A running MongoDB instance is required for the application to function correctly.
+
+##  Assistance
+
+An AI-powered coding assistant was used for specific tasks to accelerate development. These tasks included:
+
+*   **Initial Project:** Generating the initial project structure and Maven configuration was done with intellij's new project.
+*   **README Generation:** Creating the initial `README.md` file and providing updates.
+*   **Test Case Generation:** Generating boilerplate for some of the unit tests.
+
