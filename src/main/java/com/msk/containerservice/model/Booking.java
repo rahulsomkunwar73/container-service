@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- * Booking Document for MongoDB
- * Stores container booking information
- */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

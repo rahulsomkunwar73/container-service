@@ -17,14 +17,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * TDD Tests for AvailabilityService
- * Phase 2.3: Service layer tests
- *
- * Tests business logic:
- * - availableSpace > 0 → available = true
- * - availableSpace = 0 → available = false
- */
 @ExtendWith(MockitoExtension.class)
 class AvailabilityServiceTest {
 
