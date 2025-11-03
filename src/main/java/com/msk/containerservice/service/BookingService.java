@@ -21,12 +21,12 @@ public class BookingService {
     private final AtomicLong bookingCounter = new AtomicLong(957000001);
 
     public Mono<BookingResponse> createBooking(BookingRequest request) {
-        log.debug("Service: Creating booking for request: {}", request);
+        log.info("Service: Creating booking for request: {}", request);
 
         // Generate booking reference
         String bookingRef = String.valueOf(bookingCounter.getAndIncrement());
 
-        log.debug("Service: Generated bookingRef={}", bookingRef);
+        log.info("Service: Generated bookingRef={}", bookingRef);
 
         // Create booking document
         Booking booking = new Booking(
@@ -41,13 +41,13 @@ public class BookingService {
 
         // Save to MongoDB and return response
         return bookingRepository.save(booking)
-                .doOnSuccess(saved -> log.debug("Service: Saved booking to MongoDB: {}", saved))
+                .doOnSuccess(saved -> log.info("Service: Saved booking to MongoDB: {}", saved))
                 .map(saved -> new BookingResponse(saved.getBookingRef()));
     }
 
     public Mono<Booking> getBooking(String bookingRef) {
-        log.debug("Service: Fetching booking with ref: {}", bookingRef);
+        log.info("Service: Fetching booking with ref: {}", bookingRef);
         return bookingRepository.findById(bookingRef)
-                .doOnSuccess(booking -> log.debug("Service: Found booking: {}", booking));
+                .doOnSuccess(booking -> log.info("Service: Found booking: {}", booking));
     }
 }
